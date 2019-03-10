@@ -6,7 +6,8 @@ class UserTest < ActiveSupport::TestCase
   #   assert true
   # end
   def setup
-    @user = User.new(name:"Example User", email:"user@example.com")
+    @user = User.new(name:"Example User", email:"user@example.com", 
+      password: "123456", password_confirmation: "123456")
   end
 
   # 测试user是否有效
@@ -62,6 +63,18 @@ class UserTest < ActiveSupport::TestCase
     duplicate_user.email = @user.email.upcase
     @user.save
     assert_not duplicate_user.valid?
+  end
+
+  # 测试user.password user.password_confirmation不为空
+  test "password should be present(noblank)" do
+    @user.password = @user.password_confirmation = " " * 6
+    assert_not @user.valid?
+  end
+
+  # 测试user.password user.password_confirmation最小长度为6
+  test "password should have a minimum lenght" do
+    @user.password = @user.password_confirmation = "a" * 5
+    assert_not @user.valid?
   end
 
 end

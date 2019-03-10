@@ -8,4 +8,9 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum:255 },
                     format: { with: VALID_EMAIL_REGEX},
                     uniqueness: { case_sensitive: false }
+  # 添加user.password_digest密码安全机制
+  has_secure_password
+  # 添加验证user.password最小长度
+  validates :password, presence: true, length: { minimum:6 }
+
 end
