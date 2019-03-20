@@ -12,17 +12,16 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      #TODO
+      flash[:success] = "Welcome to the Sample APP ! "
+      redirect_to @user
     else
-      p "1111111111111"
       render 'new'
     end
-    # render 'show'
   end
 
   private
+    # 使用strong parameters
     def user_params
-      params.require(:user).permit(:name, :email, :passowrd,
-        :passoword_confirmation)
+     params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 end
