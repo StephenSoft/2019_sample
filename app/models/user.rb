@@ -13,4 +13,10 @@ class User < ApplicationRecord
   # 添加验证user.password最小长度
   validates :password, presence: true, length: { minimum:6 }
 
+  #定义指定字符🚢的hash 摘要
+  def self.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end
+
 end
